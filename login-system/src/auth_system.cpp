@@ -70,3 +70,25 @@ bool Authorizing_System::deleteAccount(const std::string& username) {
     sqlite3_finalize(stmt);
     return changes > 0;  // returns true if the user was deleted (there should be a change)
 }
+
+// changes user password
+bool Authorizing_System::changePassword(const std::string& username, const std::string& password) {
+    std::string sql = "UPDATE users SET password = ? WHERE username = ?;";
+
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
+
+    // bind username and password to SQL statement
+    sqlite3_bind_text(stmt, 1, password.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, username.c_str(), -1, SQLITE_STATIC);
+
+    // executes password change
+    if(sqlite3_step(stmt) != SQLITE_DONE) {
+        sqlite3_finalize(stmt);
+        return false;  // false if password change fails
+    }
+
+    sqlite3_finalize(stmt);
+    int changes = sqlite3_changes(db);
+    return changes > 0; // true if password change succeeds
+}

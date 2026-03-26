@@ -10,6 +10,7 @@ class Authorizing_System {  // used to handle authorizing user login and registr
         bool registerUser(const std::string& username, const std::string& password);
         bool loginUser(const std::string& username, const std::string& password);
         bool deleteAccount(const std::string& username);
+        bool changePassword(const std::string& username, const std::string& password);
     private:
         sqlite3* db;
 };
