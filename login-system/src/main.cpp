@@ -14,7 +14,7 @@ int main() {
     string username, password;
 
     while(true) {
-        cout << endl << "1. Register" << endl << "2. Login" << endl << "3. Exit" << endl << "Choice: ";
+        cout << endl << "1. Register" << endl << "2. Login" << endl << "3. Remove Account" << endl << "4. Exit" << endl << "Choice: ";
         cin >> choice;
 
         if (choice == 1) {  // register user
@@ -38,6 +38,27 @@ int main() {
                 cout << "Username or password incorrect, login failed" << endl;
             }
         } else if (choice == 3) {
+            cout << "Login to delete" << endl;
+            bool looping = true;
+            while(looping) {
+                cout << "Username: ";
+                cin >> username;
+                cout << "Password: ";
+                cin >> password;
+
+                if (auth.loginUser(username, password)) {
+                    cout << "Login Successfull" << endl << "Deleting account" << endl;
+                    if(auth.deleteAccount(username) == true) {
+                        cout << "Account Deleted" << endl;
+                    } else {
+                        cout << "Error Deleting Account" << endl;
+                    }
+                    looping = false;
+                } else {
+                    cout << "Username or password incorrect, login failed" << endl;
+                }
+            }
+        } else if (choice == 4) {
             break; // exit program
         } else {
             cout << "Not valid input, try again" << endl;

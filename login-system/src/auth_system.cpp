@@ -49,3 +49,24 @@ bool Authorizing_System::loginUser(const std::string& username, const std::strin
     sqlite3_finalize(stmt);  // false if there is no user
     return false;
 }
+
+// delete user account
+bool Authorizing_System::deleteAccount(const std::string& username) {
+    std::string sql = "DELETE FROM users WHERE username = ?;";
+
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
+
+    //bind username
+    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+
+    // check if user exists and delete if it does
+    if(sqlite3_step(stmt) != SQLITE_DONE) {
+        sqlite3_finalize(stmt);
+        return false;  // error during delete
+    }
+
+    int changes = sqlite3_changes(db);
+    sqlite3_finalize(stmt);
+    return changes > 0;  // returns true if the user was deleted (there should be a change)
+}
