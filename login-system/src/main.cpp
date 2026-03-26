@@ -11,19 +11,21 @@ int main() {
     Authorizing_System auth(userDataBase.db);
 
     int choice;
-    string username, password;
+    string username, password, birthdate;
 
     while(true) {
         cout << endl << "1. Register" << endl << "2. Login" << endl << "3. Remove Account" << endl << "4. Change Password" << endl << "5. Exit" << endl << "Choice: ";
         cin >> choice;
 
         if (choice == 1) {  // register user
-            cout << "Your new username: ";
+            cout << "Choose Username: ";
             cin >> username;
-            cout << "Your new password: ";
+            cout << "Choose Password: ";
             cin >> password;
+            cout << "Choose Birthdate (In case you forget password): ";
+            cin >> birthdate;
 
-            if(auth.registerUser(username, password)) {
+            if(auth.registerUser(username, password, birthdate)) {
                 cout << "Your username and password have been registered" << endl;
             }
         } else if (choice == 2) {  // attempt login
@@ -65,32 +67,59 @@ int main() {
                 }
             }
         } else if (choice == 4) {
-            cout << "Login to change password, or enter q/Q to quit" << endl;
+            cout << "1. Login to change password, 2. Enter username and birthdate, 3. Quit" << endl;
+            int option;
+            cin >> option;
             bool looping = true;
             while(looping) {
-                cout << "Username: ";
-                cin >> username;
-                if (username == "q" || username == "Q") {
-                    break;
-                }
-                cout << "Password: ";
-                cin >> password;
-                if (password == "q" || username == "Q") {
-                    break;
-                }
-
-                if (auth.loginUser(username, password)) {
-                    cout << "Login Successfull" << endl << "New Password:";
-                    cin >> password;
-                    if(auth.changePassword(username, password)) {
-                        cout << "Password changed" << endl;
-                    } else {
-                        cout << "Error Changing Password" << endl;
+                if (option == 1) {
+                    cout << "Enter q/Q to quit" << endl << "Username: ";
+                    cin >> username;
+                    if (username == "q" || username == "Q") {
+                        break;
                     }
-                    looping = false;
-                } else {
-                    cout << "Username or password incorrect, login failed" << endl;
-                }
+                    cout << "Password: ";
+                    cin >> password;
+                    if (password == "q" || username == "Q") {
+                        break;
+                    }
+
+                    if (auth.loginUser(username, password)) {
+                        cout << "Login Successfull" << endl << "New Password:";
+                        cin >> password;
+                        if(auth.changePassword(username, password)) {
+                            cout << "Password changed" << endl;
+                        } else {
+                            cout << "Error Changing Password" << endl;
+                        }
+                        looping = false;
+                    } else {
+                        cout << "Username or password incorrect, login failed" << endl;
+                    }
+                } else if (option == 2) {
+                    cout << "Enter q/Q to quit" << endl << "Username: ";
+                    cin >> username;
+                    if (username == "q" || username == "Q") {
+                        break;
+                    }
+                    cout << "Birthdate: ";
+                    cin >> birthdate;
+                    if (birthdate == "q" || username == "Q") {
+                        break;
+                    }
+                    if (auth.checkBirthdate(username, birthdate)) {
+                        cout << "Login Successfull" << endl << "New Password:";
+                        cin >> password;
+                        if(auth.changePassword(username, password)) {
+                            cout << "Password changed" << endl;
+                        } else {
+                            cout << "Error Changing Password" << endl;
+                        }
+                        looping = false;
+                    } else {
+                        cout << "Username or password incorrect, login failed" << endl;
+                    }
+                }                                
             }
         } else if (choice == 5) {
             break; // exit program

@@ -14,7 +14,7 @@ Database::~Database() {  // close database connection on destruction
 // Initialize database tables
 void Database::init() {
     // create a table if it doesn't exist
-    const char* sql = "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT);";
+    const char* sql = "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT, birthdate TEXT);";
     char* errMsg = nullptr;
     sqlite3_exec(db, sql, nullptr, nullptr, &errMsg);
 }
