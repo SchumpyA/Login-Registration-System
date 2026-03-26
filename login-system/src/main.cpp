@@ -1,17 +1,43 @@
 #include <iostream>
-#include "sqlite3.h"
+#include "../header/auth_system.h"
+#include "../header/database.h"
 using namespace std;
 
+// to complie: g++ login-system/src/main.cpp login-system/src/database.cpp login-system/src/auth_system.cpp sqlite3.o -o  run_login
+
 int main() {
-    cout << "Hello World" << endl;
+    Database userDataBase("users.db");
+    userDataBase.init();
 
-    sqlite3* db;
-    if (sqlite3_open("test.db", &db) == SQLITE_OK) {
-        cout << "Database opened successfully" << endl;
-    } else {
-        cout << "Failed to open database" << endl;
+    Authorizing_System auth(userDataBase.db);
+
+    int choice;
+    string username, password;
+
+    while(true) {
+        cout << endl << "1. Register" << endl << "2. Login" << endl << "3. Exit" << endl << "Choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            cout << "Your new username: ";
+            cin >> username;
+            cout << "Your new password: ";
+            cin >> password;
+
+            if(auth.registerUser(username, password)) {
+                cout << "Your username and password have been registered" << endl;
+            }
+        } else if (choice == 2) {
+            cout << "Username: ";
+            cin >> username;
+            cout << "Password: ";
+            cin >> password;
+
+            if (auth.loginUser(username, password)) {
+                cout << "Login Successfull" << endl;
+            } else {
+                cout << "Login Failed" << endl;
+            }
+        } else break;
     }
-    sqlite3_close(db);
-
-    return 0;
 }
