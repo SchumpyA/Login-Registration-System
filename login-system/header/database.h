@@ -3,7 +3,7 @@
 
 #include "sqlite3.h"
 
-class Database {
+class Database {  // simple wrapper for the SQLite database
     public:
         sqlite3* db;
         Database(const char* filename);

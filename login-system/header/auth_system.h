@@ -4,7 +4,7 @@
 #include <string>
 #include "sqlite3.h"
 
-class Authorizing_System {
+class Authorizing_System {  // used to handle authorizing user login and registration
     public:
         Authorizing_System(sqlite3* database);
         bool registerUser(const std::string& username, const std::string& password);
