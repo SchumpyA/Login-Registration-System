@@ -3,7 +3,8 @@
 #include "../header/database.h"
 using namespace std;
 
-// to complie: g++ login-system/src/main.cpp login-system/src/database.cpp login-system/src/auth_system.cpp sqlite3.o -o  run_login
+// to complie:
+// g++ login-system/src/main.cpp login-system/src/database.cpp login-system/src/auth_system.cpp login-system/src/hash_helper.cpp sqlite3.o -lssl -lcrypto -o run_login
 
 int main() {
     Database userDataBase("users.db");  // set up database and authorization
