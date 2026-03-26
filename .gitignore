@@ -14,7 +14,7 @@
 # VSCode
 .vscode/
 
-# SQLite database (optional)
+# SQLite database
 *.db
 
 # OS files
