@@ -19,7 +19,7 @@ bool Authorizing_System::registerUser(const std::string& username, const std::st
 
     // Execute statment
     if (sqlite3_step(stmt) != SQLITE_DONE) {
-        std::cout << "Registration failed" << std::endl;
+        std::cout << "Username taken, registration failed" << std::endl;
         sqlite3_finalize(stmt);
         return false;
     }

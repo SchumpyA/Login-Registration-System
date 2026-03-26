@@ -35,7 +35,7 @@ int main() {
             if (auth.loginUser(username, password)) {
                 cout << "Login Successfull" << endl;
             } else {
-                cout << "Login Failed" << endl;
+                cout << "Username or password incorrect, login failed" << endl;
             }
         } else if (choice == 3) {
             break; // exit program
